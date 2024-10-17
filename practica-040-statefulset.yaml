@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-app-statefulset
+spec:
+  selector:
+    matchLabels:
+      app: mypod
+  serviceName: 'my-frontend'
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: mypod
+    spec:
+      containers:
+        - name: my-frontend
+          image: busybox
+          command: ['sh', '-c', 'echo Hello Kubernetes! && sleep 3600']
+          volumeMounts:
+            - mountPath: '/data'
+              name: pv-cris
+  volumeClaimTemplates:
+    - metadata:
+        name: pv-cris
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: '5Gi'

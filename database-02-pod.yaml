@@ -32,6 +32,6 @@ metadata:
 spec:
   containers:
     - name: hello-world
-      image: nginxdemos/hello
+      image: strm/helloworld-http
       ports:
         - containerPort: 80
